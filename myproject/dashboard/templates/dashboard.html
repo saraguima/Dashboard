@@ -7,28 +7,27 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <style>
         body {
-            background-color: #f0faff; /* azul claro */
-            color: #333; /* cor do texto */
-            font-family: Arial, sans-serif; /* estilo da fonte */
+            background-color: #f0faff; 
+            color: #333; 
+            font-family: Arial, sans-serif; 
         }
 
         .container {
-            max-width: 800px; /* largura máxima do conteúdo */
-            margin: 0 auto; /* centralizar o conteúdo na página */
+            max-width: 800px; 
+            margin: 0 auto; 
         }
 
         h1 {
-            color: #007bff; /* azul brilhante */
-            text-align: center; /* centralizar texto */
-            margin-top: 50px; /* espaço superior */
+            color: #007bff; 
+            text-align: center; 
+            margin-top: 50px; 
         }
 
         #vendas-grafico {
-            margin-top: 30px; /* espaço superior */
-            text-align: center; /* centralizar gráfico */
+            margin-top: 30px;
+            text-align: center; 
         }
 
-        /* Estilos para o gráfico */
         .plotly-graph-div {
             width: 100%;
         }
@@ -45,8 +44,8 @@
     
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
-        var mes = {{ mes|safe }};
-        var vendas = {{ vendas|safe }};
+        var mes =  mes|safe;
+        var vendas =  vendas|safe ;
 
         var trace = {
             x: mes,
