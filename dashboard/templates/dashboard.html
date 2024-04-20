@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Painel de Gráficos</title>
+    <style>
+        body {
+            background-color: #f0faff; /* azul claro */
+            color: #333; /* cor do texto */
+            font-family: Arial, sans-serif; /* estilo da fonte */
+        }
+
+        .container {
+            max-width: 800px; /* largura máxima do conteúdo */
+            margin: 0 auto; /* centralizar o conteúdo na página */
+        }
+
+        h1 {
+            color: #007bff; /* azul brilhante */
+            text-align: center; /* centralizar texto */
+            margin-top: 50px; /* espaço superior */
+        }
+
+        #vendas-grafico {
+            margin-top: 30px; /* espaço superior */
+            text-align: center; /* centralizar gráfico */
+        }
+
+        /* Estilos para o gráfico */
+        .plotly-graph-div {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao Painel de Gráficos</h1>
+
+        <div id="vendas-grafico">
+            <!-- Aqui será exibido o gráfico -->
+        </div>
+    </div>
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var mes = {{ mes|safe }};
+        var vendas = {{ vendas|safe }};
+
+        var trace = {
+            x: mes,
+            y: vendas,
+            type: 'bar'
+        };
+
+        var layout = {
+            title: 'Vendas no Mês',
+            xaxis: {
+                title: 'Mês'
+            },
+            yaxis: {
+                title: 'Vendas'
+            }
+        };
+
+        var data = [trace];
+
+        Plotly.newPlot('vendas-grafico', data, layout);
+    </script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
