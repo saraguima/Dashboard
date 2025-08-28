@@ -10,11 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
-<<<<<<< HEAD
+from pathlib import Path 
 import os
-=======
->>>>>>> 10e830f3b2933fe6a0956b8ef236e332728b64e5
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,10 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'dashboard'
-=======
->>>>>>> 10e830f3b2933fe6a0956b8ef236e332728b64e5
 ]
 
 MIDDLEWARE = [
@@ -123,17 +118,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-<<<<<<< HEAD
+
 STATIC_URL = '/static/'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'dashboard/static')
 ]
-=======
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
->>>>>>> 10e830f3b2933fe6a0956b8ef236e332728b64e5
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

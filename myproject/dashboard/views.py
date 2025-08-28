@@ -1,35 +1,48 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import formularios_upload
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+import json
+import os
+
+from .forms import UploadFileForm
+from .models import Venda
 
 def inicial(request):
-    return render(request, 'dashboard.html')
+    # monta dados simples pro gráfico a partir do Model (se vazio, manda arrays vazios)
+    qs = Venda.objects.all().order_by('ano', 'mes')
+    mes = [v.mes for v in qs]
+    vendas = [float(v.valor_vendas) for v in qs]
+
+    chart_data = json.dumps({"mes": mes, "vendas": vendas})
+    return render(request, 'dashboard.html', {"chart_data": chart_data})
 
 
 def upload_arq(request):
     if request.method == 'POST':
-        form = formularios_upload(request.POST, request.FILES)
+        form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = request.FILES['file']
-            # Processar o arquivo aqui
-            # Exemplo: salvar o arquivo no servidor
-            with open('uploaded_arq.xlsx', 'wb+') as destination:
-                for chunk in uploaded_file.chunks():
-                    destination.write(chunk)
-            return render(request, 'upload_form.html')
+            f = request.FILES['files']
+            # salva o arquivo em MEDIA_ROOT/uploads/
+
+            upload_dir = os.path.join(getattr(settings, "MEDIA_ROOT", "media"), "uploads")
+            os.makedirs(upload_dir, exist_ok=True)
+            fs = FileSystemStorage(location=upload_dir)
+            fs.save(f.name, f)
+            return render(request, 'upload_form.html', {"form": UploadFileForm()})
     else:
-        form = formularios_upload()
+        form = UploadFileForm()
     return render(request, 'upload_form.html', {'form': form})
 
 def usuario_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username') or ''
+        password = request.POST.get('password') or ''
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'mensagem_erro': 'Usuário ou senha inválidos.'})
-    else:
-        return render(request, 'login.html')
+            return render(request, 'login.html', {'error_message': 'Usuário ou senha inválidos.'})
+    return render(request, 'login.html')

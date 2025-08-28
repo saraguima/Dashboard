@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Acesso ao Login</title>
 </head>
 <body>
@@ -15,9 +15,11 @@
     <form method="post">
         {% csrf_token %}
         <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
+
         <label for="password">Senha:</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
+        
         <button type="submit">Login</button>
     </form>
 </body>

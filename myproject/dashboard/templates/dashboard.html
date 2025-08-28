@@ -14,22 +14,20 @@
         }
 
         .container {
-            max-width: 800px; /* largura máxima do conteúdo */
-            margin: 0 auto; /* centralizar o conteúdo na página */
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         h1 {
-            color: #007bff; /* azul brilhante */
-            text-align: center; /* centralizar texto */
-            margin-top: 50px; /* espaço superior */
+            color: #007bff;
+            text-align: center;
+            margin-top: 50px;
         }
 
         #vendas-grafico {
-            margin-top: 30px; /* espaço superior */
-            text-align: center; /* centralizar gráfico */
+            margin-top: 30px;
         }
 
-        /* Estilos para o gráfico */
         .plotly-graph-div {
             width: 100%;
         }
@@ -39,36 +37,18 @@
     <div class="container">
         <h1>Bem-vindo ao Painel de Gráficos</h1>
 
-        <div id="vendas-grafico">
-            <!-- Aqui será exibido o gráfico -->
-        </div>
+        <div id="vendas-grafico"></div>
     </div>
     
+    <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script>
-        var mes = {{ mes|safe }};
-        var vendas = {{ vendas|safe }};
 
-        var trace = {
-            x: mes,
-            y: vendas,
-            type: 'bar'
-        };
-
-        var layout = {
-            title: 'Vendas no Mês',
-            xaxis: {
-                title: 'Mês'
-            },
-            yaxis: {
-                title: 'Vendas'
-            }
-        };
-
-        var data = [trace];
-
-        Plotly.newPlot('vendas-grafico', data, layout);
+    <!-- Dados para o gráfico em JSON (processados pelo Django) -->
+    <script id="chart-data" type="application/json">
+        {{ chart_data|safe }}
     </script>
+
+    <!-- JS estático que lê o JSON acima e monta o gráfico -->
     <script src="{% static 'js/dashboard.js' %}"></script>
 </body>
 </html>
