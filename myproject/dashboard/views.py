@@ -25,7 +25,6 @@ def upload_arq(request):
         if form.is_valid():
             f = request.FILES['files']
             # salva o arquivo em MEDIA_ROOT/uploads/
-
             upload_dir = os.path.join(getattr(settings, "MEDIA_ROOT", "media"), "uploads")
             os.makedirs(upload_dir, exist_ok=True)
             fs = FileSystemStorage(location=upload_dir)
@@ -35,14 +34,5 @@ def upload_arq(request):
         form = UploadFileForm()
     return render(request, 'upload_form.html', {'form': form})
 
-def usuario_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username') or ''
-        password = request.POST.get('password') or ''
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('dashboard')
-        else:
-            return render(request, 'login.html', {'error_message': 'Usuário ou senha inválidos.'})
-    return render(request, 'login.html')
+
+def usuario
